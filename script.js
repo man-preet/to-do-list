@@ -160,11 +160,11 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
 // Find Your Tasks
 find.addEventListener("click", () => {
   const allTasks = [];
 
+  // Fetch all tasks from localStorage
   for (let key in localStorage) {
     if (key.startsWith("task_")) {
       const task = JSON.parse(localStorage.getItem(key));
@@ -172,15 +172,22 @@ find.addEventListener("click", () => {
     }
   }
 
-
+  // Search for the task
   const searchTerm = search.value.trim();
-  const foundTasks = allTasks.filter(task => task.title === searchTerm);
+  console.log(searchTerm);
 
-  if (foundTasks.length > 0) {
-    foundTasks.forEach(task => {
+  const foundTask = allTasks.filter(task => task.title === searchTerm); // Note: foundTasks (plural)
+
+  console.log(foundTask);
+
+  if (foundTask.length > 0) {
+    // If multiple tasks with the same name, show all
+    foundTask.forEach(task => {
       alert(`Found Task:\nTitle: ${task.title}\nDescription: ${task.description}`);
     });
   } else {
     alert("Task not found!");
   }
+
+  search.value = ""; // Clear input box after search
 });
